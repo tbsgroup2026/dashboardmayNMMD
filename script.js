@@ -1,6 +1,6 @@
 /**
  * 55-INCH TV DISPLAY CONTROLLER (LINE MAY 1)
- * Fixed Position Zero-Shift Silent Live Sync (5s)
+ * 100% Zero-Flicker Seamless Cross-Fade Live Sync (5s)
  */
 
 const DESIGN_W = 1180;
@@ -32,10 +32,20 @@ function silentLiveSync() {
   const freshUrl = base + "&_t=" + Date.now() + "&_nonce=" + Math.random();
 
   currentFrame.onload = () => {
-    // Cross-fade seamlessly without touching stage position or scroll
-    currentFrame.classList.add('active');
-    previousFrame.classList.remove('active');
-    activeIdx = nextIdx;
+    // Wait 250ms for Google Sheet internal DOM layout & fonts to freeze into place
+    setTimeout(() => {
+      // Put current frame on top
+      currentFrame.style.zIndex = '30';
+      currentFrame.classList.add('active');
+
+      // After cross-fade transition finishes (400ms), lower previous frame
+      setTimeout(() => {
+        previousFrame.classList.remove('active');
+        previousFrame.style.zIndex = '10';
+        activeIdx = nextIdx;
+      }, 400);
+    }, 250);
+
     currentFrame.onload = null;
   };
 
