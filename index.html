@@ -3,15 +3,108 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BẢNG KẾT QUẢ SẢN XUẤT - LINE MAY 1</title>
+    <title>BẢNG KẾT QUẢ SẢN XUẤT - LINE MAY 1 (55" TV Dashboard)</title>
+    <!-- Google Fonts: Outfit & Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Outfit:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+    <!-- FontAwesome icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- Auto-fit & Auto-center wrapper container -->
-    <div id="sheet-container" class="sheet-container">
-        <iframe id="sheet-frame" class="sheet-frame" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSDfrqrVWu2A_mLRBUDoeKyzIzLDp3eC2ttAM8zR-6_KfVzcI97VIBKWDKNzpIWbysSub5OSBlpnzUy/pubhtml?gid=1374437410&single=true" frameborder="0" allowfullscreen></iframe>
+    <!-- Auto-fit & Auto-center TV Container -->
+    <div id="tv-container" class="tv-container">
+        <!-- Header TV Bar -->
+        <header class="tv-header">
+            <div class="header-left">
+                <div class="factory-logo">
+                    <span class="tbs-logo-text">TBS</span>
+                    <span class="tbs-sub">GROUP</span>
+                </div>
+                <h1 id="board-title">BẢNG KẾT QUẢ SẢN XUẤT - LINE MAY 1</h1>
+            </div>
+
+            <div class="header-right">
+                <div class="sync-badge" id="sync-badge">
+                    <span class="status-dot green"></span>
+                    <span class="sync-text">LIVE SYNC</span>
+                </div>
+                <!-- Live Clock -->
+                <div class="clock-container">
+                    <div class="clock-date" id="clock-date">--/--/----</div>
+                    <div class="clock-time" id="clock-time">00:00:00</div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content Area -->
+        <main class="tv-content">
+            <!-- Line Summary Bar -->
+            <div class="line-summary-bar">
+                <div class="summary-card total-teams">
+                    <div class="sum-icon"><i class="fa-solid fa-users-gear"></i></div>
+                    <div class="sum-info">
+                        <span class="sum-label">TỔNG SỐ TỔ</span>
+                        <span class="sum-value" id="summary-total-teams">4 Tổ</span>
+                    </div>
+                </div>
+
+                <div class="summary-card target-day">
+                    <div class="sum-icon"><i class="fa-solid fa-bullseye"></i></div>
+                    <div class="sum-info">
+                        <span class="sum-label">TỔNG KH NGÀY</span>
+                        <span class="sum-value" id="summary-target-day">1,063 SP</span>
+                    </div>
+                </div>
+
+                <div class="summary-card actual-qty">
+                    <div class="sum-icon"><i class="fa-solid fa-shirt"></i></div>
+                    <div class="sum-info">
+                        <span class="sum-label">TỔNG ĐÃ THỰC HIỆN</span>
+                        <span class="sum-value" id="summary-actual-qty">0 SP</span>
+                    </div>
+                </div>
+
+                <div class="summary-card total-workers">
+                    <div class="sum-icon"><i class="fa-solid fa-person-digging"></i></div>
+                    <div class="sum-info">
+                        <span class="sum-label">TỔNG LAO ĐỘNG</span>
+                        <span class="sum-value" id="summary-workers">0 LĐ</span>
+                    </div>
+                </div>
+
+                <div class="summary-card line-rate">
+                    <div class="sum-icon"><i class="fa-solid fa-chart-line"></i></div>
+                    <div class="sum-info">
+                        <span class="sum-label">TỶ LỆ HOÀN THÀNH</span>
+                        <span class="sum-value highlight" id="summary-completion-rate">0%</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4 Teams Grid (Balanced 55" TV Grid) -->
+            <div class="teams-grid" id="teams-grid">
+                <!-- Loaded dynamically by script.js -->
+                <div class="loading-spinner-container">
+                    <div class="spinner"></div>
+                    <p>Đang kết nối dữ liệu Google Sheet Database...</p>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="tv-footer">
+            <div class="footer-left">
+                <span class="pulse-indicator"></span>
+                <span>TBS GROUP - NMMD AUTOMATED TV DISPLAY SYSTEM</span>
+            </div>
+            <div class="footer-right">
+                <span id="last-update-time">Cập nhật lần cuối: --:--:--</span>
+            </div>
+        </footer>
     </div>
-    
+
     <script src="script.js"></script>
 </body>
 </html>
