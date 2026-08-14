@@ -1,4 +1,4 @@
-/* 100% Full Screen Display with Zero-Flicker Smooth Transition */
+/* 100% Full Screen Display - Centered Alignment for 55" TV */
 html, body {
     margin: 0;
     padding: 0;
@@ -7,6 +7,9 @@ html, body {
     overflow: hidden;
     background-color: #ffffff;
     position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .sheet-frame {
@@ -20,6 +23,8 @@ html, body {
     opacity: 0;
     visibility: hidden;
     transition: opacity 0.5s ease-in-out;
+    /* Shift right slightly to align the Google Sheet table right in the center */
+    transform: translateX(3.8vw);
 }
 
 .sheet-frame.active {
