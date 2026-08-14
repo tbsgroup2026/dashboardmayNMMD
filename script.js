@@ -3,7 +3,7 @@
  * High-frequency double-buffering iframe auto-refresh.
  */
 
-const SHEET_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSDfrqrVWu2A_mLRBUDoeKyzIzLDp3eC2ttAM8zR-6_KfVzcI97VIBKWDKNzpIWbysSub5OSBlpnzUy/pubhtml?gid=1374437410&single=true';
+const SHEET_URL = 'https://docs.google.com/spreadsheets/d/1IdE7D52hZoGVSEkJp6nW0P6CDA0OdJVxrZMadO19B6A/preview';
 const REFRESH_INTERVAL_MS = 5000; // Live auto-update every 5 seconds (Zero delay)
 
 let activeFrameIdx = 1;
@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const previousFrame = activeFrameIdx === 1 ? frame1 : frame2;
 
         // Bypasses cache completely for immediate live updates
-        const freshUrl = SHEET_URL + '&_t=' + new Date().getTime();
+        const freshUrl = SHEET_URL + '?_t=' + new Date().getTime();
 
         currentFrame.onload = () => {
             currentFrame.classList.add('active');
