@@ -24,10 +24,22 @@ html, body {
   align-items: center;
 }
 
-#sheet {
+.sheet-frame {
+  position: absolute;
+  top: 0;
+  left: 0;
   display: block;
   width: 1180px;
   height: 750px;
   border: 0;
   background: #ffffff;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.sheet-frame.active {
+  opacity: 1;
+  visibility: visible;
+  z-index: 10;
 }
