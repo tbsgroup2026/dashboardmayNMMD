@@ -1,11 +1,11 @@
 /**
  * 55-INCH TV DISPLAY CONTROLLER (LINE MAY 1)
- * Silent Background Live Sync (5s interval, Zero-flicker double-buffering)
+ * Optimized 1320x720 design bounds (Wider width, lower height for zero clipping)
  */
 
-const DESIGN_W = 1180;
-const DESIGN_H = 750;
-const REFRESH_MS = 5000; // Check Google Sheet for live updates every 5 seconds
+const DESIGN_W = 1320;
+const DESIGN_H = 720;
+const REFRESH_MS = 5000;
 
 let activeIdx = 1;
 
@@ -29,8 +29,6 @@ function silentLiveSync() {
   const previousFrame = activeIdx === 1 ? frame1 : frame2;
 
   const base = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSDfrqrVWu2A_mLRBUDoeKyzIzLDp3eC2ttAM8zR-6_KfVzcI97VIBKWDKNzpIWbysSub5OSBlpnzUy/pubhtml?gid=1374437410&single=true&widget=false&headers=false&chrome=false";
-  
-  // Cache-buster timestamp forcing Google CDN to deliver the latest cells
   const freshUrl = base + "&_t=" + Date.now() + "&_nonce=" + Math.random();
 
   currentFrame.onload = () => {
@@ -48,7 +46,6 @@ window.addEventListener('orientationchange', fit);
 
 document.addEventListener('DOMContentLoaded', () => {
   fit();
-  // Start silent live sync interval (5 seconds)
   setInterval(silentLiveSync, REFRESH_MS);
 });
 

@@ -13,8 +13,8 @@ html, body {
   position: fixed;
   left: 50%;
   top: 50%;
-  width: 1180px;
-  height: 750px;
+  width: 1320px;
+  height: 720px;
   transform: translate(-50%, -50%);
   transform-origin: center center;
   background: #ffffff;
@@ -29,8 +29,8 @@ html, body {
   top: 0;
   left: 0;
   display: block;
-  width: 1180px;
-  height: 750px;
+  width: 1320px;
+  height: 720px;
   border: 0;
   background: #ffffff;
   opacity: 0;
