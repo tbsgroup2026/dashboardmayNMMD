@@ -1,6 +1,6 @@
 /**
  * 55-INCH TV DISPLAY CONTROLLER (LINE MAY 1)
- * 100% Full Screen Auto-Fit (1260x780 Bounds) with Zero Scrollbars & Zero Flicker Live Sync
+ * 100% Realtime Google Sheet Recalculation Sync (1 minute interval)
  */
 
 const DESIGN_W = 1260;
@@ -29,10 +29,10 @@ function silentLiveSync() {
   const previousFrame = activeIdx === 1 ? frame1 : frame2;
 
   const base = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSDfrqrVWu2A_mLRBUDoeKyzIzLDp3eC2ttAM8zR-6_KfVzcI97VIBKWDKNzpIWbysSub5OSBlpnzUy/pubhtml?gid=1374437410&single=true&widget=false&headers=false&chrome=false";
-  const freshUrl = base + "&v=" + Date.now();
+  // Force cache-bypass query string for Google Sheet =NOW() formula recalculation
+  const freshUrl = base + "&_cb=" + Date.now();
 
   currentFrame.onload = () => {
-    // Wait 250ms for Google Sheet internal DOM layout to settle
     setTimeout(() => {
       currentFrame.style.zIndex = '30';
       currentFrame.classList.add('active');
