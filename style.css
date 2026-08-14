@@ -1,35 +1,30 @@
-/* 100% Full Screen Display with body margin-left: 80px */
-html {
+/* 100% Perfectly Centered & Balanced Display for 55" TV */
+html, body {
     margin: 0;
     padding: 0;
     width: 100vw;
     height: 100vh;
     overflow: hidden;
     background-color: #ffffff;
-}
-
-body {
-    margin: 0;
-    margin-left: 80px;
-    padding: 0;
-    width: calc(100vw - 80px);
-    height: 100vh;
-    overflow: hidden;
-    background-color: #ffffff;
-    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .sheet-frame {
     position: absolute;
     top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    left: 50%;
+    width: 100vw;
+    height: 100vh;
     border: none;
     display: block;
     opacity: 0;
     visibility: hidden;
     transition: opacity 0.5s ease-in-out;
+    /* Perfect horizontal center alignment with 1.16 scale for 55" TV */
+    transform: translateX(-48.5%) scale(1.16);
+    transform-origin: top center;
 }
 
 .sheet-frame.active {
