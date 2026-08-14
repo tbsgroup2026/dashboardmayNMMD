@@ -1,6 +1,6 @@
 /**
  * 55-INCH TV DISPLAY CONTROLLER (LINE MAY 1)
- * Guaranteed Monotonic Forward Live Sync (Canonical Single-URL Alternate Swap)
+ * Guaranteed Monotonic Realtime Sync via Cloudflare Worker Proxy (/api/sheet)
  */
 
 const DESIGN_W = 1260;
@@ -28,9 +28,8 @@ function silentLiveSync() {
   const currentFrame = nextIdx === 1 ? frame1 : frame2;
   const previousFrame = activeIdx === 1 ? frame1 : frame2;
 
-  // Pure canonical URL without ANY query parameter variations
-  // This forces Google CDN to serve from a single monotonic edge node (no time rollback)
-  const canonicalUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSDfrqrVWu2A_mLRBUDoeKyzIzLDp3eC2ttAM8zR-6_KfVzcI97VIBKWDKNzpIWbysSub5OSBlpnzUy/pubhtml?gid=1374437410&single=true&widget=false&headers=false&chrome=false";
+  // Cloudflare Worker proxy url with no-cache headers
+  const freshUrl = "/api/sheet?t=" + Date.now();
 
   currentFrame.onload = () => {
     // Wait 250ms for Google Sheet internal DOM layout to settle
@@ -41,7 +40,6 @@ function silentLiveSync() {
       setTimeout(() => {
         previousFrame.classList.remove('active');
         previousFrame.style.zIndex = '10';
-        // Reset previous frame to about:blank so next src assignment is always a fresh navigation
         previousFrame.src = 'about:blank';
         activeIdx = nextIdx;
       }, 400);
@@ -50,7 +48,7 @@ function silentLiveSync() {
     currentFrame.onload = null;
   };
 
-  currentFrame.src = canonicalUrl;
+  currentFrame.src = freshUrl;
 }
 
 window.addEventListener('resize', fit);
