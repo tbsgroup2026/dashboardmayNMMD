@@ -1,31 +1,25 @@
-/* 100% Full Screen Auto-Fit & Auto-Center Display for 55" TV */
 html, body {
-    margin: 0;
-    padding: 0;
-    width: 100vw;
-    height: 100vh;
-    overflow: hidden;
-    background-color: #ffffff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #fff;
 }
-
-.sheet-container {
-    width: 1440px;
-    height: 780px;
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transform-origin: center center;
-    transition: transform 0.15s ease-out;
+#stage {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  width: 1920px;
+  height: 1080px;
+  transform: translate(-50%, -50%);
+  transform-origin: center center;
+  background: #fff;
+  overflow: hidden;
 }
-
-.sheet-frame {
-    width: 100%;
-    height: 100%;
-    border: none;
-    display: block;
-    background-color: #ffffff;
+#sheet {
+  display: block;
+  width: 1920px;
+  height: 1080px;
+  border: 0;
+  background: #fff;
 }

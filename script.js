@@ -1,31 +1,35 @@
-/**
- * 55-INCH TV DISPLAY CONTROLLER (LINE MAY 1)
- * Native Google Sheet Realtime Sync (No JS Page/Iframe Refresh)
- */
+const DESIGN_W = 1920;
+const DESIGN_H = 1080;
+const REFRESH_MS = 60000;
 
-const BASE_WIDTH = 1440;
-const BASE_HEIGHT = 780;
-
-/**
- * Dynamically scale sheet container to fit 100% on any screen resolution (4K TV, 1080p, etc.)
- */
-function autoFitAndCenter() {
-    const container = document.getElementById('sheet-container');
-    if (!container) return;
-
-    const windowWidth = window.innerWidth;
-    const windowHeight = window.innerHeight;
-
-    const scaleX = windowWidth / BASE_WIDTH;
-    const scaleY = windowHeight / BASE_HEIGHT;
-
-    const scale = Math.min(scaleX, scaleY);
-
-    container.style.transform = `scale(${scale})`;
+function fit() {
+  const sx = window.innerWidth / DESIGN_W;
+  const sy = window.innerHeight / DESIGN_H;
+  const scale = Math.min(sx, sy);
+  const stage = document.getElementById('stage');
+  if (stage) {
+    stage.style.transform = `translate(-50%, -50%) scale(${scale})`;
+  }
 }
 
+function refreshSheet() {
+  const iframe = document.getElementById('sheet');
+  if (iframe) {
+    const base = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSDfrqrVWu2A_mLRBUDoeKyzIzLDp3eC2ttAM8zR-6_KfVzcI97VIBKWDKNzpIWbysSub5OSBlpnzUy/pubhtml?gid=1374437410&single=true&widget=false&headers=false&chrome=false";
+    iframe.src = base + "&_refresh=" + Date.now();
+  }
+}
+
+window.addEventListener('resize', fit);
+window.addEventListener('orientationchange', fit);
 document.addEventListener('DOMContentLoaded', () => {
-    // Run Auto-fit calculation immediately and on window resize
-    autoFitAndCenter();
-    window.addEventListener('resize', autoFitAndCenter);
+  fit();
+  setInterval(refreshSheet, REFRESH_MS);
+});
+
+// F11/fullscreen when the TV/browser allows it on double click.
+document.addEventListener('dblclick', () => {
+  if (!document.fullscreenElement && document.documentElement.requestFullscreen) {
+    document.documentElement.requestFullscreen().catch(() => {});
+  }
 });
