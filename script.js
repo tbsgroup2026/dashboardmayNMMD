@@ -1,6 +1,6 @@
 /**
  * 55-INCH TV DISPLAY CONTROLLER (LINE MAY 1)
- * Guaranteed Monotonic Forward Live Sync (30s interval with sequential version ticker)
+ * Guaranteed Monotonic Forward Live Sync (Canonical Single-URL Alternate Swap)
  */
 
 const DESIGN_W = 1260;
@@ -8,7 +8,6 @@ const DESIGN_H = 780;
 const REFRESH_MS = 30000; // 30 seconds interval
 
 let activeIdx = 1;
-let versionCount = 0;
 
 function fit() {
   const sx = window.innerWidth / DESIGN_W;
@@ -25,15 +24,13 @@ function silentLiveSync() {
   const frame2 = document.getElementById('sheet-2');
   if (!frame1 || !frame2) return;
 
-  versionCount++;
   const nextIdx = activeIdx === 1 ? 2 : 1;
   const currentFrame = nextIdx === 1 ? frame1 : frame2;
   const previousFrame = activeIdx === 1 ? frame1 : frame2;
 
-  const base = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSDfrqrVWu2A_mLRBUDoeKyzIzLDp3eC2ttAM8zR-6_KfVzcI97VIBKWDKNzpIWbysSub5OSBlpnzUy/pubhtml?gid=1374437410&single=true&widget=false&headers=false&chrome=false";
-  
-  // Incremental version query parameter guarantees browser triggers iframe load while staying monotonic
-  const freshUrl = base + "&v=" + versionCount;
+  // Pure canonical URL without ANY query parameter variations
+  // This forces Google CDN to serve from a single monotonic edge node (no time rollback)
+  const canonicalUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSDfrqrVWu2A_mLRBUDoeKyzIzLDp3eC2ttAM8zR-6_KfVzcI97VIBKWDKNzpIWbysSub5OSBlpnzUy/pubhtml?gid=1374437410&single=true&widget=false&headers=false&chrome=false";
 
   currentFrame.onload = () => {
     // Wait 250ms for Google Sheet internal DOM layout to settle
@@ -44,6 +41,8 @@ function silentLiveSync() {
       setTimeout(() => {
         previousFrame.classList.remove('active');
         previousFrame.style.zIndex = '10';
+        // Reset previous frame to about:blank so next src assignment is always a fresh navigation
+        previousFrame.src = 'about:blank';
         activeIdx = nextIdx;
       }, 400);
     }, 250);
@@ -51,7 +50,7 @@ function silentLiveSync() {
     currentFrame.onload = null;
   };
 
-  currentFrame.src = freshUrl;
+  currentFrame.src = canonicalUrl;
 }
 
 window.addEventListener('resize', fit);
