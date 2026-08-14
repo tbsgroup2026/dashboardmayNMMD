@@ -1,10 +1,10 @@
 /**
  * 55-INCH TV DISPLAY CONTROLLER (LINE MAY 1)
- * Optimized 1320x720 design bounds (Wider width, lower height for zero clipping)
+ * Canvas 1600x900 (16:9 ratio) with Silent Live Sync (5s interval)
  */
 
-const DESIGN_W = 1320;
-const DESIGN_H = 720;
+const DESIGN_W = 1600;
+const DESIGN_H = 900;
 const REFRESH_MS = 5000;
 
 let activeIdx = 1;
@@ -12,7 +12,7 @@ let activeIdx = 1;
 function fit() {
   const sx = window.innerWidth / DESIGN_W;
   const sy = window.innerHeight / DESIGN_H;
-  const scale = Math.min(sx, sy);
+  const scale = Math.min(sx, sy); // Luôn giữ đúng tỷ lệ 16:9, không méo hình
   const stage = document.getElementById('stage');
   if (stage) {
     stage.style.transform = `translate(-50%, -50%) scale(${scale})`;
@@ -49,7 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
   setInterval(silentLiveSync, REFRESH_MS);
 });
 
-// F11/fullscreen when the TV/browser allows it on double click.
+// F11/fullscreen khi trình duyệt TV cho phép
 document.addEventListener('dblclick', () => {
   if (!document.fullscreenElement && document.documentElement.requestFullscreen) {
     document.documentElement.requestFullscreen().catch(() => {});
