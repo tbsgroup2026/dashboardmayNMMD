@@ -1,11 +1,11 @@
 /**
  * 55-INCH TV DISPLAY CONTROLLER (LINE MAY 1)
- * Guaranteed Realtime Silent Live Sync (60s tick)
+ * Ultra-Fast Realtime Sync (30s ticker with instant cache-bypass)
  */
 
 const DESIGN_W = 1260;
 const DESIGN_H = 780;
-const REFRESH_MS = 60000; // 1 minute interval
+const REFRESH_MS = 30000; // 30 seconds interval for faster live updates
 
 let activeIdx = 1;
 
@@ -29,8 +29,9 @@ function silentLiveSync() {
   const previousFrame = activeIdx === 1 ? frame1 : frame2;
 
   const base = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSDfrqrVWu2A_mLRBUDoeKyzIzLDp3eC2ttAM8zR-6_KfVzcI97VIBKWDKNzpIWbysSub5OSBlpnzUy/pubhtml?gid=1374437410&single=true&widget=false&headers=false&chrome=false";
-  // Force cache-bypass query string for maximum freshness
-  const freshUrl = base + "&timestamp=" + Date.now() + "&rand=" + Math.random();
+  
+  // Ultra-fresh cache buster
+  const freshUrl = base + "&_ts=" + Date.now() + "&_b=" + Math.floor(Math.random() * 1000000);
 
   currentFrame.onload = () => {
     // Wait 250ms for Google Sheet internal DOM layout to settle
