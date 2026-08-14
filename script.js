@@ -1,6 +1,6 @@
 /**
  * 55-INCH TV DISPLAY CONTROLLER (LINE MAY 1)
- * Canvas 1600x900 (16:9 ratio) with Silent Live Sync (5s interval)
+ * Canvas 1600x900 (16:9 ratio) - Fixed Position Zero Shift Sync
  */
 
 const DESIGN_W = 1600;
@@ -12,7 +12,7 @@ let activeIdx = 1;
 function fit() {
   const sx = window.innerWidth / DESIGN_W;
   const sy = window.innerHeight / DESIGN_H;
-  const scale = Math.min(sx, sy); // Luôn giữ đúng tỷ lệ 16:9, không méo hình
+  const scale = Math.min(sx, sy);
   const stage = document.getElementById('stage');
   if (stage) {
     stage.style.transform = `translate(-50%, -50%) scale(${scale})`;
@@ -32,6 +32,9 @@ function silentLiveSync() {
   const freshUrl = base + "&_t=" + Date.now() + "&_nonce=" + Math.random();
 
   currentFrame.onload = () => {
+    // Lock exact pixel position to prevent position jumping
+    currentFrame.style.top = '0px';
+    currentFrame.style.left = '0px';
     currentFrame.classList.add('active');
     previousFrame.classList.remove('active');
     activeIdx = nextIdx;
