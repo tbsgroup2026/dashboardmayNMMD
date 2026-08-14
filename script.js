@@ -1,17 +1,37 @@
-const DESIGN_W = 1440;
-const DESIGN_H = 780;
-const REFRESH_MS = 5000; // High-frequency 5s refresh to catch Google Sheet edits immediately
+const REFRESH_MS = 5000;
+const STEP = 0.05; // 5% zoom per click/step
+const MIN_SCALE = 0.5;
+const MAX_SCALE = 3.0;
 
+// Read saved zoom level or set default 125%
+let currentZoom = parseFloat(localStorage.getItem('tv_zoom_level')) || 1.25;
 let activeIdx = 1;
 
-function fit() {
-  const sx = window.innerWidth / DESIGN_W;
-  const sy = window.innerHeight / DESIGN_H;
-  const scale = Math.min(sx, sy);
+function applyZoom() {
   const stage = document.getElementById('stage');
+  const zoomText = document.getElementById('zoom-text');
   if (stage) {
-    stage.style.transform = `translate(-50%, -50%) scale(${scale})`;
+    stage.style.transform = `translate(-50%, -50%) scale(${currentZoom})`;
   }
+  if (zoomText) {
+    zoomText.textContent = `${Math.round(currentZoom * 100)}%`;
+  }
+  localStorage.setItem('tv_zoom_level', currentZoom);
+}
+
+function zoomIn() {
+  currentZoom = Math.min(MAX_SCALE, currentZoom + STEP);
+  applyZoom();
+}
+
+function zoomOut() {
+  currentZoom = Math.max(MIN_SCALE, currentZoom - STEP);
+  applyZoom();
+}
+
+function resetZoom() {
+  currentZoom = 1.0;
+  applyZoom();
 }
 
 function refreshSheet() {
@@ -24,8 +44,6 @@ function refreshSheet() {
   const previousFrame = activeIdx === 1 ? frame1 : frame2;
 
   const base = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSDfrqrVWu2A_mLRBUDoeKyzIzLDp3eC2ttAM8zR-6_KfVzcI97VIBKWDKNzpIWbysSub5OSBlpnzUy/pubhtml?gid=1374437410&single=true&widget=false&headers=false&chrome=false";
-  
-  // Double cache-buster bypassing browser HTTP cache and Google CDN cache
   const freshUrl = base + "&_refresh=" + Date.now() + "&_nocache=" + Math.random();
 
   currentFrame.onload = () => {
@@ -38,17 +56,47 @@ function refreshSheet() {
   currentFrame.src = freshUrl;
 }
 
-window.addEventListener('resize', fit);
-window.addEventListener('orientationchange', fit);
-
 document.addEventListener('DOMContentLoaded', () => {
-  fit();
+  applyZoom();
   setInterval(refreshSheet, REFRESH_MS);
+
+  // Zoom Button Handlers
+  document.getElementById('btn-zoom-in')?.addEventListener('click', zoomIn);
+  document.getElementById('btn-zoom-out')?.addEventListener('click', zoomOut);
+  document.getElementById('btn-reset')?.addEventListener('click', resetZoom);
+  document.getElementById('zoom-text')?.addEventListener('click', resetZoom);
+
+  // Fullscreen Button
+  document.getElementById('btn-fullscreen')?.addEventListener('click', () => {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen().catch(() => {});
+    } else {
+      document.exitFullscreen().catch(() => {});
+    }
+  });
+
+  // Mouse Wheel Zoom (Ctrl + Wheel or Mouse Scroll)
+  window.addEventListener('wheel', (e) => {
+    if (e.ctrlKey) {
+      e.preventDefault();
+      if (e.deltaY < 0) zoomIn();
+      else zoomOut();
+    }
+  }, { passive: false });
+
+  // Keyboard Shortcuts (+, -, 0)
+  window.addEventListener('keydown', (e) => {
+    if (e.key === '+' || e.key === '=') zoomIn();
+    else if (e.key === '-' || e.key === '_') zoomOut();
+    else if (e.key === '0') resetZoom();
+  });
 });
 
-// F11/fullscreen when the TV/browser allows it on double click.
-document.addEventListener('dblclick', () => {
-  if (!document.fullscreenElement && document.documentElement.requestFullscreen) {
-    document.documentElement.requestFullscreen().catch(() => {});
+// F11 / Fullscreen on double click (outside zoom bar)
+document.addEventListener('dblclick', (e) => {
+  if (!e.target.closest('.zoom-bar')) {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen().catch(() => {});
+    }
   }
 });
