@@ -1,10 +1,10 @@
 /**
  * 55-INCH TV PRODUCTION DASHBOARD CONTROLLER (NMMD SEWING LINE 1)
- * Google Sheet CSV Database Live Fetcher & Dynamic Auto-Fit Renderer
+ * Google Sheet Live Database Synchronizer (3s interval)
  */
 
 const SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSDfrqrVWu2A_mLRBUDoeKyzIzLDp3eC2ttAM8zR-6_KfVzcI97VIBKWDKNzpIWbysSub5OSBlpnzUy/pub?gid=1374437410&single=true&output=csv';
-const REFRESH_INTERVAL_MS = 5000; // Realtime sync every 5 seconds
+const REFRESH_INTERVAL_MS = 3000; // Continuous live update every 3 seconds
 
 const BASE_WIDTH = 1440;
 const BASE_HEIGHT = 840;
@@ -48,7 +48,6 @@ function autoFitAndCenter() {
     const scaleX = windowWidth / BASE_WIDTH;
     const scaleY = windowHeight / BASE_HEIGHT;
 
-    // Use optimal scale factor with padding margin
     const scale = Math.min(scaleX, scaleY) * 0.98;
 
     elements.tvContainer.style.transform = `scale(${scale})`;
@@ -95,10 +94,12 @@ async function fetchDataFromGoogleSheet() {
 
     } catch (error) {
         console.error('Lỗi kết nối Google Sheet Database:', error);
-        elements.syncBadge.innerHTML = `
-            <span class="status-dot red"></span>
-            <span class="sync-text" style="color: var(--accent-red)">MẤT KẾT NỐI</span>
-        `;
+        if (elements.syncBadge) {
+            elements.syncBadge.innerHTML = `
+                <span class="status-dot red"></span>
+                <span class="sync-text" style="color: var(--accent-red)">MẤT KẾT NỐI</span>
+            `;
+        }
     }
 }
 
@@ -108,7 +109,6 @@ async function fetchDataFromGoogleSheet() {
 function parseGoogleSheetCSV(csvText) {
     const lines = csvText.split('\n').map(line => line.split(','));
 
-    // Extract 4 Teams from CSV matrix
     return [
         extractTeamData(lines, 'TỔ MAY 1', 2),
         extractTeamData(lines, 'TỔ MAY 2', 12),
@@ -166,7 +166,6 @@ function extractTeamData(lines, defaultName, startCol) {
 function renderDashboard(teams) {
     if (!teams || teams.length === 0) return;
 
-    // Line Totals
     let totalTargetDay = 0;
     let totalActualQty = 0;
     let totalWorkers = 0;
@@ -183,13 +182,12 @@ function renderDashboard(teams) {
         ? ((totalActualQty / totalCumulativeTarget) * 100).toFixed(1) + '%' 
         : '0%';
 
-    elements.sumTeams.textContent = `${teams.length} Tổ`;
-    elements.sumTargetDay.textContent = `${totalTargetDay.toLocaleString('vi-VN')} SP`;
-    elements.sumActualQty.textContent = `${totalActualQty.toLocaleString('vi-VN')} SP`;
-    elements.sumWorkers.textContent = `${totalWorkers} LĐ`;
-    elements.sumCompletionRate.textContent = overallRate;
+    if (elements.sumTeams) elements.sumTeams.textContent = `${teams.length} Tổ`;
+    if (elements.sumTargetDay) elements.sumTargetDay.textContent = `${totalTargetDay.toLocaleString('vi-VN')} SP`;
+    if (elements.sumActualQty) elements.sumActualQty.textContent = `${totalActualQty.toLocaleString('vi-VN')} SP`;
+    if (elements.sumWorkers) elements.sumWorkers.textContent = `${totalWorkers} LĐ`;
+    if (elements.sumCompletionRate) elements.sumCompletionRate.textContent = overallRate;
 
-    // Team Cards HTML
     let html = '';
 
     teams.forEach((t) => {
@@ -272,15 +270,17 @@ function renderDashboard(teams) {
         `;
     });
 
-    elements.teamsGrid.innerHTML = html;
+    if (elements.teamsGrid) elements.teamsGrid.innerHTML = html;
 }
 
 function updateLastRefreshedTime() {
     const now = new Date();
     const timeStr = now.toLocaleTimeString('vi-VN');
-    elements.lastUpdateTime.textContent = `Cập nhật lần cuối: ${timeStr}`;
-    elements.syncBadge.innerHTML = `
-        <span class="status-dot green"></span>
-        <span class="sync-text">LIVE SYNC</span>
-    `;
+    if (elements.lastUpdateTime) elements.lastUpdateTime.textContent = `Cập nhật lần cuối: ${timeStr}`;
+    if (elements.syncBadge) {
+        elements.syncBadge.innerHTML = `
+            <span class="status-dot green"></span>
+            <span class="sync-text">LIVE SYNC (3s)</span>
+        `;
+    }
 }
