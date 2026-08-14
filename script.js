@@ -1,5 +1,5 @@
-const DESIGN_W = 1920;
-const DESIGN_H = 1080;
+const DESIGN_W = 1440;
+const DESIGN_H = 780;
 const REFRESH_MS = 5000; // High-frequency 5s refresh to catch Google Sheet edits immediately
 
 let activeIdx = 1;

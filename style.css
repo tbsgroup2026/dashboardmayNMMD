@@ -4,18 +4,24 @@ html, body {
   height: 100%;
   overflow: hidden;
   background: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 #stage {
   position: fixed;
   left: 50%;
   top: 50%;
-  width: 1920px;
-  height: 1080px;
+  width: 1440px;
+  height: 780px;
   transform: translate(-50%, -50%);
   transform-origin: center center;
   background: #fff;
   overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .sheet-frame {
@@ -23,8 +29,8 @@ html, body {
   top: 0;
   left: 0;
   display: block;
-  width: 1920px;
-  height: 1080px;
+  width: 1440px;
+  height: 780px;
   border: 0;
   background: #fff;
   opacity: 0;
