@@ -1,4 +1,4 @@
-/* 100% Full Screen Display - Perfectly Balanced & Centered on Both Sides for 55" TV */
+/* 100% Full Screen Display with exact margin-left: 15px */
 html, body {
     margin: 0;
     padding: 0;
@@ -12,17 +12,15 @@ html, body {
 .sheet-frame {
     position: absolute;
     top: 0;
-    left: 50%;
-    width: 100vw;
+    left: 0;
+    margin-left: 15px;
+    width: calc(100vw - 15px);
     height: 100vh;
     border: none;
     display: block;
     opacity: 0;
     visibility: hidden;
     transition: opacity 0.5s ease-in-out;
-    /* Center align horizontally and scale up evenly to balance both left & right margins */
-    transform: translateX(-46.2%) scale(1.15);
-    transform-origin: top center;
 }
 
 .sheet-frame.active {
