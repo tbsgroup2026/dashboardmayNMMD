@@ -1,6 +1,6 @@
 /**
  * 55-INCH TV DISPLAY CONTROLLER (LINE MAY 1)
- * Dead-Center Auto-Fit Scaling (1180x760 Bounds) with Silent Live Sync (5s)
+ * Fixed Position Zero-Shift Silent Live Sync (5s)
  */
 
 const DESIGN_W = 1180;
@@ -32,6 +32,7 @@ function silentLiveSync() {
   const freshUrl = base + "&_t=" + Date.now() + "&_nonce=" + Math.random();
 
   currentFrame.onload = () => {
+    // Cross-fade seamlessly without touching stage position or scroll
     currentFrame.classList.add('active');
     previousFrame.classList.remove('active');
     activeIdx = nextIdx;
