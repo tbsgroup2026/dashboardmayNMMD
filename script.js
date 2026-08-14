@@ -1,10 +1,23 @@
 /**
  * 55-INCH TV DISPLAY CONTROLLER (LINE MAY 1)
- * Fullscreen Flexbox Sheet Container with Silent Live Sync (5s)
+ * Dead-Center Auto-Fit Scaling (1180x760 Bounds) with Silent Live Sync (5s)
  */
 
+const DESIGN_W = 1180;
+const DESIGN_H = 760;
 const REFRESH_MS = 5000;
+
 let activeIdx = 1;
+
+function fit() {
+  const sx = window.innerWidth / DESIGN_W;
+  const sy = window.innerHeight / DESIGN_H;
+  const scale = Math.min(sx, sy);
+  const stage = document.getElementById('stage');
+  if (stage) {
+    stage.style.transform = `translate(-50%, -50%) scale(${scale})`;
+  }
+}
 
 function silentLiveSync() {
   const frame1 = document.getElementById('sheet-1');
@@ -28,7 +41,11 @@ function silentLiveSync() {
   currentFrame.src = freshUrl;
 }
 
+window.addEventListener('resize', fit);
+window.addEventListener('orientationchange', fit);
+
 document.addEventListener('DOMContentLoaded', () => {
+  fit();
   setInterval(silentLiveSync, REFRESH_MS);
 });
 
