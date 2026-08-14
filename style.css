@@ -1,4 +1,4 @@
-/* 100% Perfectly Centered & Scaled Display - Zero Blank Space on Right */
+/* 100% Auto-Fit & Auto-Center Display for Any Screen Resolution */
 html, body {
     margin: 0;
     padding: 0;
@@ -8,23 +8,31 @@ html, body {
     background-color: #ffffff;
     display: flex;
     justify-content: center;
-    align-items: flex-start;
+    align-items: center;
+}
+
+.sheet-container {
+    width: 1440px;
+    height: 780px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform-origin: center center;
+    transition: transform 0.15s ease-out;
 }
 
 .sheet-frame {
     position: absolute;
     top: 0;
-    left: 50%;
-    width: 100vw;
-    height: 100vh;
+    left: 0;
+    width: 100%;
+    height: 100%;
     border: none;
     display: block;
     opacity: 0;
     visibility: hidden;
     transition: opacity 0.5s ease-in-out;
-    /* Scale up 1.22x and center horizontally to fill screen width evenly */
-    transform: translateX(-47.2%) scale(1.22);
-    transform-origin: top center;
 }
 
 .sheet-frame.active {
