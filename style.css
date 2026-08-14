@@ -13,7 +13,7 @@ html, body {
 #stage {
   position: fixed;
   left: 50%;
-  top: 50%;
+  top: 48%;
   width: 1260px;
   height: 780px;
   transform: translate(-50%, -50%);
