@@ -3,7 +3,7 @@
  * Zero-flicker double-buffering iframe auto-refresh.
  */
 
-const SHEET_URL = 'https://docs.google.com/spreadsheets/d/1IdE7D52hZoGVSEkJp6nW0P6CDA0OdJVxrZMadO19B6A/preview?rm=minimal';
+const SHEET_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSDfrqrVWu2A_mLRBUDoeKyzIzLDp3eC2ttAM8zR-6_KfVzcI97VIBKWDKNzpIWbysSub5OSBlpnzUy/pubhtml?gid=1374437410&single=true';
 const REFRESH_INTERVAL_MS = 2000; // Realtime sync every 2 seconds
 
 let activeFrameIdx = 1;
