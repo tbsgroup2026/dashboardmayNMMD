@@ -1,6 +1,6 @@
 /**
  * 55-INCH TV DISPLAY CONTROLLER (LINE MAY 1)
- * Guaranteed Monotonic Forward Live Sync (Canonical Google Sheet Endpoint)
+ * Guaranteed Monotonic Forward Live Sync (30s interval with sequential version ticker)
  */
 
 const DESIGN_W = 1260;
@@ -8,6 +8,7 @@ const DESIGN_H = 780;
 const REFRESH_MS = 30000; // 30 seconds interval
 
 let activeIdx = 1;
+let versionCount = 0;
 
 function fit() {
   const sx = window.innerWidth / DESIGN_W;
@@ -24,12 +25,15 @@ function silentLiveSync() {
   const frame2 = document.getElementById('sheet-2');
   if (!frame1 || !frame2) return;
 
+  versionCount++;
   const nextIdx = activeIdx === 1 ? 2 : 1;
   const currentFrame = nextIdx === 1 ? frame1 : frame2;
   const previousFrame = activeIdx === 1 ? frame1 : frame2;
 
-  // Clean canonical URL without random parameters to guarantee Google CDN forward monotonicity
-  const freshUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSDfrqrVWu2A_mLRBUDoeKyzIzLDp3eC2ttAM8zR-6_KfVzcI97VIBKWDKNzpIWbysSub5OSBlpnzUy/pubhtml?gid=1374437410&single=true&widget=false&headers=false&chrome=false";
+  const base = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSDfrqrVWu2A_mLRBUDoeKyzIzLDp3eC2ttAM8zR-6_KfVzcI97VIBKWDKNzpIWbysSub5OSBlpnzUy/pubhtml?gid=1374437410&single=true&widget=false&headers=false&chrome=false";
+  
+  // Incremental version query parameter guarantees browser triggers iframe load while staying monotonic
+  const freshUrl = base + "&v=" + versionCount;
 
   currentFrame.onload = () => {
     // Wait 250ms for Google Sheet internal DOM layout to settle
