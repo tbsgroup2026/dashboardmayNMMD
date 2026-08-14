@@ -5,6 +5,7 @@ html, body {
   overflow: hidden;
   background: #fff;
 }
+
 #stage {
   position: fixed;
   left: 50%;
@@ -16,10 +17,23 @@ html, body {
   background: #fff;
   overflow: hidden;
 }
-#sheet {
+
+.sheet-frame {
+  position: absolute;
+  top: 0;
+  left: 0;
   display: block;
   width: 1920px;
   height: 1080px;
   border: 0;
   background: #fff;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.4s ease-in-out;
+}
+
+.sheet-frame.active {
+  opacity: 1;
+  visibility: visible;
+  z-index: 10;
 }
