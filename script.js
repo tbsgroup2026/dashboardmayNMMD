@@ -15,7 +15,7 @@ function fit() {
 function refreshSheet() {
   const iframe = document.getElementById('sheet');
   if (iframe) {
-    const base = "https://docs.google.com/spreadsheets/d/1IdE7D52hZoGVSEkJp6nW0P6CDA0OdJVxrZMadO19B6A/preview?gid=1374437410&single=true&widget=false&headers=false&chrome=false";
+    const base = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSDfrqrVWu2A_mLRBUDoeKyzIzLDp3eC2ttAM8zR-6_KfVzcI97VIBKWDKNzpIWbysSub5OSBlpnzUy/pubhtml?gid=1374437410&single=true&widget=false&headers=false&chrome=false";
     iframe.src = base + "&_refresh=" + Date.now();
   }
 }
