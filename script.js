@@ -1,11 +1,11 @@
 /**
  * 55-INCH TV DISPLAY CONTROLLER (LINE MAY 1)
- * 100% Zero-Flicker Seamless Cross-Fade Live Sync (5s)
+ * 100% Zero-Flicker Seamless Cross-Fade Live Sync (1 minute interval = 60000ms)
  */
 
 const DESIGN_W = 1180;
 const DESIGN_H = 760;
-const REFRESH_MS = 5000;
+const REFRESH_MS = 60000; // 1 minute interval
 
 let activeIdx = 1;
 
