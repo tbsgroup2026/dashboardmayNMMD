@@ -16,6 +16,7 @@ html, body {
   top: 50%;
   width: 1600px;
   height: 900px;
+  margin-left: 66px;
   transform: translate(-50%, -50%);
   transform-origin: center center;
   background: #ffffff;
