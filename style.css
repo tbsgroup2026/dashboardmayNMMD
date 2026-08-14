@@ -14,8 +14,8 @@ html, body {
   position: fixed;
   left: 50%;
   top: 50%;
-  width: 1180px;
-  height: 760px;
+  width: 1260px;
+  height: 780px;
   transform: translate(-50%, -50%);
   transform-origin: center center;
   background: #ffffff;
@@ -27,8 +27,8 @@ html, body {
   position: absolute;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
+  width: 1260px;
+  height: 780px;
   border: none;
   outline: none;
   margin: 0;

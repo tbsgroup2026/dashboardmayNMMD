@@ -1,10 +1,10 @@
 /**
  * 55-INCH TV DISPLAY CONTROLLER (LINE MAY 1)
- * Guaranteed Monotonic Live Sync (1 minute interval, zero timestamp rollback)
+ * 100% Full Screen Auto-Fit (1260x780 Bounds) with Zero Scrollbars & Zero Flicker Live Sync
  */
 
-const DESIGN_W = 1180;
-const DESIGN_H = 760;
+const DESIGN_W = 1260;
+const DESIGN_H = 780;
 const REFRESH_MS = 60000; // 1 minute interval
 
 let activeIdx = 1;
@@ -29,8 +29,6 @@ function silentLiveSync() {
   const previousFrame = activeIdx === 1 ? frame1 : frame2;
 
   const base = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSDfrqrVWu2A_mLRBUDoeKyzIzLDp3eC2ttAM8zR-6_KfVzcI97VIBKWDKNzpIWbysSub5OSBlpnzUy/pubhtml?gid=1374437410&single=true&widget=false&headers=false&chrome=false";
-  
-  // Use consistent refresh timestamp to guarantee Google CDN forward monotonicity
   const freshUrl = base + "&v=" + Date.now();
 
   currentFrame.onload = () => {
