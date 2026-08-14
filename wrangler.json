@@ -1,0 +1,11 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "dashboardmaynmmd",
+  "account_id": "3b346f8398b8d1143acd52516011cfb4",
+  "main": "worker.js",
+  "assets": {
+    "directory": "./",
+    "binding": "ASSETS"
+  },
+  "compatibility_date": "2024-09-23"
+}
