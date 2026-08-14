@@ -1,6 +1,6 @@
 /**
  * 55-INCH TV DISPLAY CONTROLLER (LINE MAY 1)
- * Pure Native Google Sheet Embed (No JS Refresh Timers, No Zoom Buttons)
+ * Shifted 30px right for perfect TV edge alignment
  */
 
 const DESIGN_W = 1440;
@@ -12,7 +12,7 @@ function fit() {
   const scale = Math.min(sx, sy);
   const stage = document.getElementById('stage');
   if (stage) {
-    stage.style.transform = `translate(-50%, -50%) scale(${scale})`;
+    stage.style.transform = `translate(calc(-50% + 30px), -50%) scale(${scale})`;
   }
 }
 

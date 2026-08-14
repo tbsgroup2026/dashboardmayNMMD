@@ -15,7 +15,7 @@ html, body {
   top: 50%;
   width: 1440px;
   height: 780px;
-  transform: translate(-50%, -50%);
+  transform: translate(calc(-50% + 30px), -50%);
   transform-origin: center center;
   background: #ffffff;
   overflow: hidden;
