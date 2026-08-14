@@ -2,7 +2,7 @@ export default {
   async fetch(request, env) {
     const url = new URL(request.url);
 
-    // API proxy for Google Sheet with zero-cache headers to eliminate timestamp rollback
+    // API proxy for Google Sheet with zero-cache headers & row-header stripper
     if (url.pathname === '/api/sheet') {
       const sheetUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSDfrqrVWu2A_mLRBUDoeKyzIzLDp3eC2ttAM8zR-6_KfVzcI97VIBKWDKNzpIWbysSub5OSBlpnzUy/pubhtml?gid=1374437410&single=true&widget=false&headers=false&chrome=false";
       
@@ -15,6 +15,35 @@ export default {
         });
         
         let htmlText = await googleRes.text();
+
+        // Inject CSS rules to hide row headers (1, 2, 3...) and chrome completely
+        const customCss = `
+        <style>
+          .row-headers-background, .row-header-wrapper, td.hd, th.hd, tr > th, .grid-row-headers {
+            display: none !important;
+            width: 0 !important;
+            min-width: 0 !important;
+          }
+          #sheet-menu, #top-bar, .doc-title, #header, #footer {
+            display: none !important;
+          }
+          html, body {
+            margin: 0 !important;
+            padding: 0 !important;
+            overflow: hidden !important;
+            background: #ffffff !important;
+          }
+          table.waffle {
+            margin-left: 0 !important;
+          }
+        </style>
+        `;
+
+        if (htmlText.includes('</head>')) {
+          htmlText = htmlText.replace('</head>', customCss + '</head>');
+        } else {
+          htmlText = customCss + htmlText;
+        }
         
         return new Response(htmlText, {
           status: 200,
