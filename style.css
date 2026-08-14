@@ -1,4 +1,4 @@
-/* 100% Full Screen Display - Centered Alignment for 55" TV */
+/* 100% Full Screen Display - Perfectly Balanced & Centered on Both Sides for 55" TV */
 html, body {
     margin: 0;
     padding: 0;
@@ -7,15 +7,12 @@ html, body {
     overflow: hidden;
     background-color: #ffffff;
     position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
 }
 
 .sheet-frame {
     position: absolute;
     top: 0;
-    left: 0;
+    left: 50%;
     width: 100vw;
     height: 100vh;
     border: none;
@@ -23,8 +20,9 @@ html, body {
     opacity: 0;
     visibility: hidden;
     transition: opacity 0.5s ease-in-out;
-    /* Shift right slightly to align the Google Sheet table right in the center */
-    transform: translateX(3.8vw);
+    /* Center align horizontally and scale up evenly to balance both left & right margins */
+    transform: translateX(-46.2%) scale(1.15);
+    transform-origin: top center;
 }
 
 .sheet-frame.active {
