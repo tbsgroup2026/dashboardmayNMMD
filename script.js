@@ -1,11 +1,11 @@
 /**
  * 55-INCH TV DISPLAY CONTROLLER (LINE MAY 1)
- * Ultra-Fast Realtime Sync (30s ticker with instant cache-bypass)
+ * Guaranteed Monotonic Forward Live Sync (Canonical Google Sheet Endpoint)
  */
 
 const DESIGN_W = 1260;
 const DESIGN_H = 780;
-const REFRESH_MS = 30000; // 30 seconds interval for faster live updates
+const REFRESH_MS = 30000; // 30 seconds interval
 
 let activeIdx = 1;
 
@@ -28,10 +28,8 @@ function silentLiveSync() {
   const currentFrame = nextIdx === 1 ? frame1 : frame2;
   const previousFrame = activeIdx === 1 ? frame1 : frame2;
 
-  const base = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSDfrqrVWu2A_mLRBUDoeKyzIzLDp3eC2ttAM8zR-6_KfVzcI97VIBKWDKNzpIWbysSub5OSBlpnzUy/pubhtml?gid=1374437410&single=true&widget=false&headers=false&chrome=false";
-  
-  // Ultra-fresh cache buster
-  const freshUrl = base + "&_ts=" + Date.now() + "&_b=" + Math.floor(Math.random() * 1000000);
+  // Clean canonical URL without random parameters to guarantee Google CDN forward monotonicity
+  const freshUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSDfrqrVWu2A_mLRBUDoeKyzIzLDp3eC2ttAM8zR-6_KfVzcI97VIBKWDKNzpIWbysSub5OSBlpnzUy/pubhtml?gid=1374437410&single=true&widget=false&headers=false&chrome=false";
 
   currentFrame.onload = () => {
     // Wait 250ms for Google Sheet internal DOM layout to settle
