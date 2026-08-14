@@ -1,10 +1,10 @@
 /**
  * 55-INCH TV DISPLAY CONTROLLER (LINE MAY 1)
- * Shifted 30px right for perfect TV edge alignment
+ * Optimized 1180x750 design bounds to eliminate right blank space completely
  */
 
-const DESIGN_W = 1440;
-const DESIGN_H = 780;
+const DESIGN_W = 1180;
+const DESIGN_H = 750;
 
 function fit() {
   const sx = window.innerWidth / DESIGN_W;
@@ -12,7 +12,7 @@ function fit() {
   const scale = Math.min(sx, sy);
   const stage = document.getElementById('stage');
   if (stage) {
-    stage.style.transform = `translate(calc(-50% + 30px), -50%) scale(${scale})`;
+    stage.style.transform = `translate(-50%, -50%) scale(${scale})`;
   }
 }
 

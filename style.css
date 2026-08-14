@@ -13,9 +13,9 @@ html, body {
   position: fixed;
   left: 50%;
   top: 50%;
-  width: 1440px;
-  height: 780px;
-  transform: translate(calc(-50% + 30px), -50%);
+  width: 1180px;
+  height: 750px;
+  transform: translate(-50%, -50%);
   transform-origin: center center;
   background: #ffffff;
   overflow: hidden;
@@ -26,8 +26,8 @@ html, body {
 
 #sheet {
   display: block;
-  width: 1440px;
-  height: 780px;
+  width: 1180px;
+  height: 750px;
   border: 0;
   background: #ffffff;
 }
